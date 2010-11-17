@@ -20,8 +20,8 @@
 
 /* Used to control the demo */
 #define SEED 123
-#define SIZE 10000
-#define RUNS 10
+#define SIZE 100
+#define RUNS 1
 
 /* helper functions */
 void verify(int64_t *dst, const int size)
@@ -53,9 +53,21 @@ static void fill(int64_t *arr, const int size)
   int i;
   for (i = 0; i < size; i++)
   {
-    arr[i] = lrand48();
+    arr[i] = lrand48() % SIZE;
   }
 }
+
+static void print(int64_t *arr, const int size)
+{
+  int i;
+  for (i = 0; i < size; i++)
+  {
+    printf("%lld ", arr[i]);
+  }
+  printf("\n");
+
+}
+
 
 /* used for stdlib */
 static inline int simple_cmp(const void *a, const void *b)
@@ -237,7 +249,9 @@ void run_tests(void)
     total_time += end_time - start_time;
     verify(dst, SIZE);
   }  
+  print(arr, SIZE);
   printf("tim sort time: %.2f us per iteration\n", total_time / RUNS);
+  print(dst, SIZE);
 }
 
 int main(void)
